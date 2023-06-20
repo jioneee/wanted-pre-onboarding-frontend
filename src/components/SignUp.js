@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import { useState } from 'react'
+
 const SignUpContainer = styled.div`
 padding:20px;
 display: flex;
@@ -17,17 +19,39 @@ text-align: center;
 `
 
 const SignUp = () => {
+    const [userEmail, setUserEmail] = useState("");
+    const [userEmailError, setUserEmailError] = useState(false);
+    const [userPassword, setUserPassword] = useState("");
+    const [userPasswordError, setUserPasswordError] = useState(false);
+
+    const onChangeUserEmail = (e) => {
+        const userEmailRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+        if ((!e.target.value || (userEmailRegex.test(e.target.value)))) setUserEmailError(false);
+        else setUserEmailError(true);
+        setUserEmail(e.target.value);
+    };
+
+
+    const onChangeUserPassword = (e) => {
+        const userPasswordRegex = /^(?=.*[0-9]).{8,25}$/
+        if ((!e.target.value || (userPasswordRegex.test(e.target.value)))) setUserPasswordError(false);
+        else setUserPasswordError(true);
+        setUserPassword(e.target.value);
+    };
     return (
     
 
             <SignUpContainer>
                <SignUpHeader>회원가입</SignUpHeader>
                이메일
-               <input data-testid="email-input" place="이메일을 입력하세요" type="email"/>
+               <input data-testid="email-input" placeholder="이메일을 입력하세요" type="email" value={userEmail} onChange={onChangeUserEmail} />
+               {userEmailError && <div className="invalid-input">정확한 이메일을 입력해주세요</div>}
                비밀번호
-               <input data-testid="password-input"  place="비밀번호를 입력하세요" type="password"/>
+               <input data-testid="password-input"  placeholder="비밀번호를 입력하세요" type="password" value={userPassword} onChange={onChangeUserPassword} />
+               {userPasswordError && <div className="invalid-input">비밀번호는 8자이상으로 입력해주세요</div>}
               
-               <button data-testid="signup-button">회원가입</button>
+               
+               {(userEmailError || userPasswordError) ? <button data-testid="signup-button" disabled='disabled'>회원가입</button> : <button data-testid="signup-button">회원가입</button>}
             </SignUpContainer>
 
     )
