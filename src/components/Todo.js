@@ -1,5 +1,11 @@
+import styled from 'styled-components';
+
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+
+const Header = styled.h1`
+
+`
 
 const Todo = () => {
   const url = 'https://www.pre-onboarding-selection-task.shop'; 
@@ -7,6 +13,8 @@ const Todo = () => {
   const [newTodo, setNewTodo] = useState('');
   const [todos, setTodos] = useState([]);
   const [editingId, setEditingId] = useState(null);
+  const [showInput, setShowInput] = useState(true);
+
 
 
   const handleAddTodo = async () => {
@@ -60,7 +68,7 @@ const Todo = () => {
     setNewTodo(e.target.value);
   };
 
-  const handleModifyTodo = async (id, modifiedTodo) => {
+  const handleModifyTodo = async (id, modifiedTodo, isCompleted) => {
     try {
       const headers = {
         Authorization: `Bearer ${accessToken}`,
@@ -86,6 +94,8 @@ const Todo = () => {
   };
 
   const handleEditTodo = (id) => {
+    const todo = todos.find((todo) => todo.id === id);
+    setNewTodo(todo.todo);
     setEditingId(id);
   };
 
@@ -95,7 +105,9 @@ const Todo = () => {
   };
 
   const handleCancelEdit = () => {
+    setNewTodo('');
     setEditingId(null);
+   
   };
 
   const handleDeleteTodo = async (id) => {
@@ -114,28 +126,36 @@ const Todo = () => {
     }
   };
 
+
   return (
     <>
-      <input
-     
-        value={newTodo}
-        onChange={handleChangeTodo}
-      />
-      <button  onClick={handleAddTodo}>
-        추가
-      </button>
+      <Header>Todo</Header>
+
+      {showInput && (
+        <>
+          <input
+            data-testid="new-todo-input"
+            value={newTodo}
+            onChange={handleChangeTodo}
+          />
+          <button data-testid="new-todo-add-button" onClick={handleAddTodo}>
+            추가
+          </button>
+        </>
+      )}
       {todos.map((todo) => (
         <li key={todo.id}>
           {editingId === todo.id ? (
             <>
               <input
+                data-testid="modify-input"
                 type="text"
-                value={todo.todo}
-                onChange={(e) => handleModifyTodo(todo.id, e.target.value)}
+                value={newTodo}
+                onChange={(e) => setNewTodo(e.target.value)}
               />
               <button
                 data-testid="submit-button"
-                onClick={() => handleSubmitTodo(todo.id, todo.todo)}
+                onClick={() => handleSubmitTodo(todo.id, newTodo)}
               >
                 제출
               </button>
@@ -146,7 +166,7 @@ const Todo = () => {
           ) : (
             <>
               <label>
-                <input type="checkbox" />
+                <input type="checkbox" value={todo.isCompleted} />
                 <span>{todo.todo}</span>
               </label>
               <button
@@ -155,10 +175,11 @@ const Todo = () => {
               >
                 수정
               </button>
-              <button 
-              data-testid="delete-button"
-              onClick={() => handleDeleteTodo(todo.id)}
-              >삭제
+              <button
+                data-testid="delete-button"
+                onClick={() => handleDeleteTodo(todo.id)}
+              >
+                삭제
               </button>
             </>
           )}
