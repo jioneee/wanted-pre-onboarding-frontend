@@ -54,12 +54,15 @@ const SignUp = () => {
         },
       });
 
-      console.log('SignUpData:', signUpData);
       navigate(`/signin`)
     } 
     catch (error) {
-      console.log('Error:', error.response.data);
-      alert('이미 존재하는 email 입니다')
+      if(userEmail.length <= 0 || userPassword.length <= 0){
+        alert('email, password를 입력하세요')
+      } else {
+        alert('이미 존재하는 email 입니다')
+      }
+   
     }
   };
 
