@@ -75,6 +75,22 @@ const Todo = () => {
     setEditingId(null);
   };
 
+  const handleDeleteTodo = async (id) => {
+    try {
+      const headers = {
+        Authorization: `Bearer ${accessToken}`,
+      };
+
+      await axios.delete(`${url}/todos/${id}`, { headers });
+ 
+
+      const updatedTodos = todos.filter((todo) => todo.id !== id);
+      setTodos(updatedTodos);
+    } catch (error) {
+   
+    }
+  };
+
   return (
     <>
       <input
@@ -116,7 +132,11 @@ const Todo = () => {
               >
                 수정
               </button>
-              <button data-testid="delete-button">삭제</button>
+              <button 
+              data-testid="delete-button"
+              onClick={() => handleDeleteTodo(todo.id)}
+              >삭제
+              </button>
             </>
           )}
         </li>
