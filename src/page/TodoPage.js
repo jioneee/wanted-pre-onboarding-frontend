@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import Todo from '../components/Todo'
 
 
 const Container = styled.div`
@@ -14,7 +15,7 @@ border: 1px solid black;
 const TodoPage = () => {
     return (
         <Container>
-
+            <Todo />
         </Container>
     )
 
