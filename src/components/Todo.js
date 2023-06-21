@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Todo = () => {
   const url = 'https://www.pre-onboarding-selection-task.shop'; 
@@ -32,6 +32,29 @@ const Todo = () => {
 
     }
   };
+
+  const handleGetTodo = async () => {
+
+    try {
+
+      const headers = {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      };
+
+      const response = await axios.get(`${url}/todos`, { headers });
+      setTodos(response.data)
+      console.log('Response:', response.data);
+ 
+    } catch (error) {
+      console.log('Error:', error.response.data);
+
+    }
+  }
+  useEffect(() => {
+    handleGetTodo();
+  }, [accessToken]);
+
 
   const handleChangeTodo = (e) => {
     setNewTodo(e.target.value);
@@ -66,7 +89,7 @@ const Todo = () => {
     setEditingId(id);
   };
 
-  const handleSaveTodo = (id, modifiedTodo) => {
+  const handleSubmitTodo = (id, modifiedTodo) => {
     handleModifyTodo(id, modifiedTodo);
     setEditingId(null);
   };
@@ -94,11 +117,11 @@ const Todo = () => {
   return (
     <>
       <input
-        data-testid="new-todo-input"
+     
         value={newTodo}
         onChange={handleChangeTodo}
       />
-      <button data-testid="new-todo-add-button" onClick={handleAddTodo}>
+      <button  onClick={handleAddTodo}>
         추가
       </button>
       {todos.map((todo) => (
@@ -111,10 +134,10 @@ const Todo = () => {
                 onChange={(e) => handleModifyTodo(todo.id, e.target.value)}
               />
               <button
-                data-testid="save-button"
-                onClick={() => handleSaveTodo(todo.id, todo.todo)}
+                data-testid="submit-button"
+                onClick={() => handleSubmitTodo(todo.id, todo.todo)}
               >
-                저장
+                제출
               </button>
               <button data-testid="cancel-button" onClick={handleCancelEdit}>
                 취소
