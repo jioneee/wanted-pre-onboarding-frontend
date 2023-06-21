@@ -55,7 +55,7 @@ const SignUp = () => {
       });
 
       console.log('SignUpData:', signUpData);
-      navigate(`${url}/auth/signin`)
+      navigate(`/signin`)
     } 
     catch (error) {
       console.log('Error:', error.response.data);
