@@ -35,7 +35,7 @@ const SignUp = () => {
   };
 
   const onChangeUserPassword = (e) => {
-    const userPasswordRegex = /^(?=.*[0-9]).{8,25}$/;
+    const userPasswordRegex = /^.{8,}$/;
     if (!e.target.value || userPasswordRegex.test(e.target.value)) setUserPasswordError(false);
     else setUserPasswordError(true);
     setUserPassword(e.target.value);
