@@ -63,14 +63,11 @@ const SignIn = () => {
           },
         });
   
-
-        console.log('token',response.data.access_token )
         const accessToken = response.data.access_token;
         localStorage.setItem('accessToken', accessToken);
         navigate(`/todo`)
       } 
       catch (error) {
-        console.log('Error:', error.response.data);
     
       }
     };

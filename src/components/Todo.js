@@ -30,13 +30,13 @@ const Todo = () => {
       };
 
       const response = await axios.post(`${url}/todos`, data, { headers });
-      console.log('Response:', response.data);
+  
       const newTodoItem = response.data;
       setTodos([...todos, newTodoItem]);
 
       setNewTodo('');
     } catch (error) {
-      console.log('Error:', error.response.data);
+
 
     }
   };
@@ -52,10 +52,9 @@ const Todo = () => {
 
       const response = await axios.get(`${url}/todos`, { headers });
       setTodos(response.data)
-      console.log('Response:', response.data);
+  
  
     } catch (error) {
-      console.log('Error:', error.response.data);
 
     }
   }
