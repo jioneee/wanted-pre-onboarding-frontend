@@ -12,6 +12,10 @@
 
 
 
+https://github.com/jioneee/wanted-pre-onboarding-frontend/assets/107476522/4a628f95-822a-4d6f-a898-d0dd30be859c
+
+
+
 ## 사용한 라이브러리
 
 -React Router
