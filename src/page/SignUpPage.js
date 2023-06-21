@@ -13,9 +13,10 @@ border: 1px solid black;
 
 
 const SignUpPage = () => {
+
     return (
         <Container>
-        <SignUp />
+        <SignUp></SignUp>
         </Container>
     )
 

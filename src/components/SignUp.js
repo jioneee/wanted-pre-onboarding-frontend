@@ -59,7 +59,7 @@ const SignUp = () => {
     } 
     catch (error) {
       console.log('Error:', error.response.data);
-  
+      alert('이미 존재하는 email 입니다')
     }
   };
 
