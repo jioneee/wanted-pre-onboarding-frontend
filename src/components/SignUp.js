@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpContainer = styled.div`
   padding: 20px;
@@ -19,6 +20,7 @@ const SignUpHeader = styled.h1`
 `;
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const url = 'https://www.pre-onboarding-selection-task.shop'; // Remove trailing slash
   const [userEmail, setUserEmail] = useState('');
   const [userEmailError, setUserEmailError] = useState(false);
@@ -53,7 +55,9 @@ const SignUp = () => {
       });
 
       console.log('SignUpData:', signUpData);
-    } catch (error) {
+      navigate(`${url}/auth/signin`)
+    } 
+    catch (error) {
       console.log('Error:', error.response.data);
   
     }

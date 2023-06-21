@@ -21,7 +21,7 @@ const SignIn = () => {
     
 
             <SignInContainer>
-               <SignInHeader>회원가입</SignInHeader>
+               <SignInHeader>로그인</SignInHeader>
                이메일
                <input data-testid="email-input" place="이메일을 입력하세요" type="email" />
                비밀번호
