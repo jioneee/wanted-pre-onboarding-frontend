@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import axios from 'axios'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -23,7 +23,14 @@ text-align: center;
 
 const SignIn = () => {
     const navigate = useNavigate();
-    const url = 'https://www.pre-onboarding-selection-task.shop'; // Remove trailing slash
+    const url = 'https://www.pre-onboarding-selection-task.shop'; 
+    const hasAccessToken = !!localStorage.getItem('accessToken');
+
+    useEffect(() => {
+      if (hasAccessToken) {
+        navigate('/todo');
+      }
+    }, [hasAccessToken, navigate]);
     const [userEmail, setUserEmail] = useState('');
     const [userEmailError, setUserEmailError] = useState(false);
     const [userPassword, setUserPassword] = useState('');
@@ -67,42 +74,44 @@ const SignIn = () => {
     
       }
     };
+    if (hasAccessToken) {
+        return navigate('/todo', { replace: true });
+      }
     return (
+
+        <SignInContainer>
+        <SignInHeader>로그인</SignInHeader>
+                   이메일
+          <input
+            data-testid="email-input"
+            placeholder="이메일을 입력하세요"
+            type="email"
+            name="userEmail"
+            value={userEmail}
+            onChange={onChangeUserEmail}
+          />
+          {userEmailError && <div className="invalid-input">정확한 이메일을 입력해주세요</div>}
+          비밀번호
+          <input
+            data-testid="password-input"
+            placeholder="비밀번호를 입력하세요"
+            type="password"
+            name="userPassword"
+            value={userPassword}
+            onChange={onChangeUserPassword}
+          />
+          {userPasswordError && <div className="invalid-input">비밀번호는 8자 이상으로 입력해주세요</div>}
     
-
-    <SignInContainer>
-    <SignInHeader>로그인</SignInHeader>
-               이메일
-      <input
-        data-testid="email-input"
-        placeholder="이메일을 입력하세요"
-        type="email"
-        name="userEmail"
-        value={userEmail}
-        onChange={onChangeUserEmail}
-      />
-      {userEmailError && <div className="invalid-input">정확한 이메일을 입력해주세요</div>}
-      비밀번호
-      <input
-        data-testid="password-input"
-        placeholder="비밀번호를 입력하세요"
-        type="password"
-        name="userPassword"
-        value={userPassword}
-        onChange={onChangeUserPassword}
-      />
-      {userPasswordError && <div className="invalid-input">비밀번호는 8자 이상으로 입력해주세요</div>}
-
-      {(userEmailError || userPasswordError) ? (
-        <button data-testid="signin-button" disabled="disabled">
-          로그인
-        </button>
-      ) : (
-        <button data-testid="signin-button" onClick={onClickSignIn}>
-          로그인
-        </button>
-      )}
-            </SignInContainer>
+          {(userEmailError || userPasswordError) ? (
+            <button data-testid="signin-button" disabled="disabled">
+              로그인
+            </button>
+          ) : (
+            <button data-testid="signin-button" onClick={onClickSignIn}>
+              로그인
+            </button>
+          )}
+                </SignInContainer>
 
     )
 
