@@ -21,7 +21,7 @@ const SignUpHeader = styled.h1`
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const url = 'https://www.pre-onboarding-selection-task.shop'; // Remove trailing slash
+  const url = 'https://www.pre-onboarding-selection-task.shop';
   const [userEmail, setUserEmail] = useState('');
   const [userEmailError, setUserEmailError] = useState(false);
   const [userPassword, setUserPassword] = useState('');
