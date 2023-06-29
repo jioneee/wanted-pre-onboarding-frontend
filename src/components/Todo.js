@@ -30,19 +30,19 @@ const Todo = () => {
     }
   };
 
-  const handleGetTodo = async () => {
-
-    try {
-      const data = await todosApi.getTodos(accessToken)
-      setTodos(data)
-  
-    } catch (error) {
-
-    }
-  }
   useEffect(() => {
-    handleGetTodo();
-  }, []);
+    const handleGetTodo = async () => {
+
+      try {
+        const data = await todosApi.getTodos(accessToken)
+        setTodos(data)
+    
+      } catch (error) {
+  
+      }
+    }
+    handleGetTodo()
+  }, [accessToken]);
 
 
   const handleChangeTodo = (e) => {
